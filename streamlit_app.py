@@ -1,7 +1,7 @@
 import streamlit as st
 import time
 
-# 1. ตั้งค่าหน้าแอป (แก้ไขตัวพิมพ์เล็กแล้วครับกี้)
+# 1. ตั้งค่าหน้าแอป (มิ้นแก้ i ตัวเล็กให้แล้วครับกี้)
 st.set_page_config(page_title="GIE BALL PRO - วิเคราะห์บอลโลก", page_icon="⚽", layout="wide")
 
 # 2. ปรับแต่ง CSS
@@ -16,7 +16,7 @@ st.markdown("""
 
 # ฟังก์ชัน AI Predict
 def run_ai_logic(h_name, a_name, h_p, d_p, a_p, tip, score):
-    with st.spinner(f'AI มิ้น กำลังประมวลผลสถิติ {h_name} vs {a_name}...'):
+    with st.spinner(f'AI มิ้น กำลังประมวลผล...'):
         time.sleep(1.2)
     col_a, col_b, col_c = st.columns(3)
     col_a.metric(f"{h_name}", f"{h_p}%")
@@ -31,9 +31,9 @@ st.markdown("<div class='league-header'>🏴󠁧󠁢󠁥󠁮󠁧󠁿 PREMIER LEA
 with st.container():
     st.write("🕒 **02:15 น. | ลิเวอร์พูล vs เชลซี**")
     if st.button("🔍 วิเคราะห์ (AI Predict)", key="apr2_1"):
-        run_ai_logic("ลิเวอร์พูล", "เชลซี", 55, 25, 20, "หงส์แดงในบ้านหนีตายลุ้นแชมป์ ฟอร์มสดกว่าเชลซีเยอะ!", "2-1 หรือ 3-1")
+        run_ai_logic("ลิเวอร์พูล", "เชลซี", 55, 25, 20, "หงส์แดงในบ้านเน้นมาก เชลซีช่วงนี้ยังแกว่ง วางเจ้าบ้านยาวๆ", "2-1")
 
 with st.container():
-    st.write("🕒 **03:00 น. | แมนฯ ซิตี้ vs บาเยิร์น มิวนิค (UCL)**")
+    st.write("🕒 **03:00 น. | แมนฯ ซิตี้ vs บาเยิร์น มิวนิค**")
     if st.button("🔍 วิเคราะห์ (AI Predict)", key="apr2_2"):
-        run_ai_logic("แมนฯ ซิตี้", "บาเยิร์น", 50, 25, 25, "เรือใบสีฟ้าในบ้านคือปีศาจ บาเยิร์นต้านลำบากแน่นอน", "2-0")
+        run_ai_logic("แมนฯ ซิตี้", "บาเยิร์น", 50, 25, 25, "บอลระบบแมนฯ ซิตี้ในบ้านไว้ใจได้ที่สุดในโลกตอนนี้", "3-1")
