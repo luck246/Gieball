@@ -1,79 +1,72 @@
 import streamlit as st
 import time
 
-# 1. ตั้งค่าหน้าแอป (เช็ค Syntax ตัวพิมพ์เล็กเรียบร้อย)
-st.set_page_config(page_title="GIE BALL PRO - วิเคราะห์คืนนี้", page_icon="⚽", layout="wide")
+# 1. ตั้งค่าหน้าแอป (เช็ค Syntax เรียบร้อย)
+st.set_page_config(page_title="GIE BALL PRO - วิเคราะห์บอลคืนนี้", page_icon="⚽", layout="wide")
 
-# 2. CSS โทนดำ-ทอง (สไตล์กี้)
+# 2. CSS โทนดำ-ทอง สไตล์เซียนกี้
 st.markdown("""
     <style>
     .stApp { background-color: #0b101a; color: #ffffff; }
-    .league-header { background: linear-gradient(90deg, #ffd700, #b8860b); color: black; padding: 10px; border-radius: 5px; font-weight: bold; margin: 20px 0 10px 0; }
-    .stButton>button { width: 100%; border-radius: 20px; background-color: #ffd700; color: black; font-weight: bold; }
+    .league-header { background: linear-gradient(90deg, #ffd700, #b8860b); color: black; padding: 10px; border-radius: 5px; font-weight: bold; margin: 25px 0 10px 0; text-align: center; }
+    .stButton>button { width: 100%; border-radius: 20px; background-color: #ffd700; color: black; font-weight: bold; border: none; }
+    .stButton>button:hover { background-color: #ffea00; }
     </style>
     """, unsafe_allow_html=True)
 
-# 3. Header อัปเดตวันที่ให้เห็นชัดๆ
-st.markdown("<h1 style='text-align: center; color: #ffd700;'>⚽ GIE BALL PRO</h1>", unsafe_allow_html=True)
-st.markdown("<h3 style='text-align: center; color: #ffffff;'>วิเคราะห์บอลคืนนี้: วันอังคารที่ 3 มีนาคม 2026</h3>", unsafe_allow_html=True)
-st.markdown("<p style='text-align: center; color: #8b949e;'>ข้อมูลสดใหม่จาก SIAMSPOORT 1,000%</p>", unsafe_allow_html=True)
+# 3. Header
+st.markdown("<h1 style='text-align: center; color: #ffd700;'>⚽ GIE BALL PRO : DATA TODAY</h1>", unsafe_allow_html=True)
+st.markdown("<p style='text-align: center; color: #8b949e;'>วิเคราะห์เจาะลึกตามโปรแกรมจริง | อัปเดต 3 มี.ค. 2026</p>", unsafe_allow_html=True)
 
-def run_ai_logic(h_name, a_name, h_p, d_p, a_p, tip, score):
-    with st.spinner(f'AI มิ้น กำลังประมวลผลคู่ {h_name}...'):
-        time.sleep(1)
-    col1, col2, col3 = st.columns(3)
-    col1.metric(h_name, f"{h_p}%")
-    col2.metric("เสมอ", f"{d_p}%")
-    col3.metric(a_name, f"{a_p}%")
-    st.info(f"🎯 **ฟันธงโดยเซียนกี้:** {tip}")
-    st.success(f"💰 **สกอร์คาด:** {score}")
+def run_ai_logic(h_name, a_name, tip, score):
+    with st.spinner(f'AI มิ้น กำลังประมวลผลสถิติ...'):
+        time.sleep(0.5)
+    st.info(f"🎯 **เซียนกี้ฟันธง:** {tip}")
+    st.success(f"💰 **สกอร์ที่คาด:** {score}")
 
-# --- ชุดข้อมูลจากรูป 849.jpg (พรีเมียร์ลีกคืนนี้) ---
-st.markdown("<div class='league-header'>🏴󠁧󠁢󠁥󠁮󠁧󠁿 PREMIER LEAGUE (ข้อมูลจริง 3 มี.ค.)</div>", unsafe_allow_html=True)
+# --- 1. พรีเมียร์ลีก อังกฤษ (4 คู่) ---
+st.markdown("<div class='league-header'>🏴󠁧󠁢󠁥󠁮󠁧󠁿 พรีเมียร์ลีก อังกฤษ</div>", unsafe_allow_html=True)
+pl_matches = [
+    ("เอฟเวอร์ตัน", "เบิร์นลีย์", "02:30", "pl1", "ทอฟฟี่หนีตายใส่ยับ", "2-1"),
+    ("บอร์นมัธ", "เบรนท์ฟอร์ด", "02:30", "pl2", "เจ้าบ้านในรังไว้ใจได้", "1-0"),
+    ("ลีดส์ ยูไนเต็ด", "ซันเดอร์แลนด์", "02:30", "pl3", "ยูงทองนัดตกค้างต้องเน้น", "2-0"),
+    ("วูล์ฟแฮมป์ตัน", "ลิเวอร์พูล", "03:15", "pl4", "คู่บิ๊กแมตช์! หงส์แดงบุกตบ", "1-3")
+]
+for h, a, t, k, tip, sc in pl_matches:
+    st.write(f"🕒 **{t} น. | {h} vs {a}**")
+    if st.button("🔍 วิเคราะห์", key=k): run_ai_logic(h, a, tip, sc)
 
-with st.container():
-    st.write("🕒 **02:30 น. | บอร์นมัธ vs เบรนท์ฟอร์ด**")
-    if st.button("🔍 วิเคราะห์", key="real_1"):
-        run_ai_logic("บอร์นมัธ", "เบรนท์ฟอร์ด", 48, 27, 25, "บอร์นมัธในบ้านดุ ลุ้นเบียดได้", "1-0")
+# --- 2. เอฟเอ คัพ อังกฤษ (1 คู่) ---
+st.markdown("<div class='league-header'>🏆 เอฟเอ คัพ อังกฤษ (นัดรีเพลย์)</div>", unsafe_allow_html=True)
+st.write("🕒 **02:45 น. | พอร์ท เวล vs บริสตอล ซิตี้**")
+if st.button("🔍 วิเคราะห์", key="fa1"):
+    run_ai_logic("พอร์ท เวล", "บริสตอล ซิตี้", "ทีมเยือนดูดีกว่าเล็กน้อย", "1-2")
 
-with st.container():
-    st.write("🕒 **02:30 น. | เอฟเวอร์ตัน vs เบิร์นลีย์**")
-    if st.button("🔍 วิเคราะห์", key="real_2"):
-        run_ai_logic("เอฟเวอร์ตัน", "เบิร์นลีย์", 55, 25, 20, "ทอฟฟี่ต้องการแต้ม ในบ้านไม่พลาด", "2-0")
+# --- 3. โกปา เดล เรย์ สเปน (1 คู่) ---
+st.markdown("<div class='league-header'>🇪🇸 โกปา เดล เรย์ สเปน (รอบรองฯ เลก 2)</div>", unsafe_allow_html=True)
+st.write("🕒 **03:00 น. | บาร์เซโลน่า vs แอตเลติโก มาดริด**")
+st.warning("⚠️ เลกแรกแอตฯ ชนะ 4-0 คืนนี้บาร์ซ่าต้องยิงคืนหนักมาก!")
+if st.button("🔍 วิเคราะห์", key="sp1"):
+    run_ai_logic("บาร์ซ่า", "แอต.มาดริด", "บาร์ซ่าบุกแหลกเพื่อกู้หน้า", "3-1")
 
-with st.container():
-    st.write("🕒 **03:15 น. | วูล์ฟแฮมป์ตัน vs ลิเวอร์พูล**")
-    if st.button("🔍 วิเคราะห์", key="real_3"):
-        run_ai_logic("วูล์ฟส์", "ลิเวอร์พูล", 18, 22, 60, "หงส์แดงเหนือกว่าเยอะ จัดไปครับกี้", "1-3")
+# --- 4. โคปปา อิตาเลีย (1 คู่) ---
+st.markdown("<div class='league-header'>🇮🇹 โคปปา อิตาเลีย (รอบรองฯ)</div>", unsafe_allow_html=True)
+st.write("🕒 **03:00 น. | โคโม่ vs อินเตอร์ มิลาน**")
+if st.button("🔍 วิเคราะห์", key="it1"):
+    run_ai_logic("โคโม่", "อินเตอร์", "งูใหญ่เหนือกว่าทุกขุมกำลัง", "0-2")
 
-# --- ชุดข้อมูลจากรูป 998.jpg (บอลถ้วยคืนนี้) ---
-st.markdown("<div class='league-header'>🏆 CUP COMPETITIONS (ข้อมูลจริง 3 มี.ค.)</div>", unsafe_allow_html=True)
+# --- 5. เฟร้นช์ คัพ ฝรั่งเศส (1 คู่) ---
+st.markdown("<div class='league-header'>🇫🇷 เฟร้นช์ คัพ ฝรั่งเศส</div>", unsafe_allow_html=True)
+st.write("🕒 **03:00 น. | สตราส์บูร์ก vs แร็งส์**")
+if st.button("🔍 วิเคราะห์", key="fr1"):
+    run_ai_logic("สตราส์บูร์ก", "แร็งส์", "บอลถ้วยออกหน้าเสมอหน้ากว้าง", "1-1")
 
-with st.container():
-    st.write("🕒 **03:00 น. | โคโม่ vs อินเตอร์ มิลาน (อิตาลี)**")
-    if st.button("🔍 วิเคราะห์", key="real_4"):
-        run_ai_logic("โคโม่", "อินเตอร์", 12, 18, 70, "อินเตอร์เกรดบอลสูงกว่าเยอะ กินนิ่มครับ", "0-2")
+# --- 6. เคเอ็นวีบี คัพ เนเธอร์แลนด์ (1 คู่) ---
+st.markdown("<div class='league-header'>🇳🇱 เคเอ็นวีบี คัพ เนเธอร์แลนด์</div>", unsafe_allow_html=True)
+st.write("🕒 **02:00 น. | เอ็นอีซี ไนเมเก้น พบ พีเอสวี**")
+if st.button("🔍 วิเคราะห์", key="nl1"):
+    run_ai_logic("ไนเมเก้น", "พีเอสวี", "พีเอสวีมาตรฐานสูงกว่าเยอะ", "0-3")
 
-with st.container():
-    st.write("🕒 **03:00 น. | บาร์เซโลน่า vs แอต.มาดริด (สเปน)**")
-    if st.button("🔍 วิเคราะห์", key="real_5"):
-        run_ai_logic("บาร์ซ่า", "แอต.มาดริด", 52, 24, 24, "บิ๊กแมตช์! บาร์ซ่าเฉือนชนะในบ้าน", "2-1")
-
-# --- เพิ่มเติมจากรูป 849.jpg (แชมเปี้ยนชิพ) ---
-st.markdown("<div class='league-header'>🏴󠁧󠁢󠁥󠁮󠁧󠁿 CHAMPIONSHIP / OTHER</div>", unsafe_allow_html=True)
-
-with st.container():
-    st.write("🕒 **02:30 น. | ลีดส์ ยูไนเต็ด vs ซันเดอร์แลนด์**")
-    if st.button("🔍 วิเคราะห์", key="real_6"):
-        run_ai_logic("ลีดส์", "ซันเดอร์แลนด์", 60, 25, 15, "ยูงทองเน้นเลื่อนชั้น ในบ้านไว้ใจได้", "2-0")
-
-with st.container():
-    st.write("🕒 **02:45 น. | ดันดี ยูไนเต็ด vs เซนต์ เมียร์เรน**")
-    if st.button("🔍 วิเคราะห์", key="real_7"):
-        run_ai_logic("ดันดี ยูฯ", "เซนต์ เมียร์เรน", 35, 35, 30, "ออกเสมอหน้ากว้าง", "1-1")
-
-# 4. ตัวนับจำนวนคนดู (แบบเดิมที่กี้ชอบ)
-st.markdown("<div style='text-align: center; margin-top: 40px;'>", unsafe_allow_html=True)
-st.write("📊 Visitors ของแท้จากระบบ Gieball2")
-st.markdown(f'<img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgieball2.streamlit.app&count_bg=%23FFD700&title_bg=%23555555&icon=skype.svg&title=Visitors"/>', unsafe_allow_html=True)
-st.markdown("</div>", unsafe_allow_html=True)
+# 🚀 Visitor Counter
+st.write("---")
+st.markdown(f'<div style="text-align: center;"><img src="https://hits.seeyoufarm.com/api/count/incr/badge.svg?url=https%3A%2F%2Fgieball2.streamlit.app&count_bg=%23FFD700&title_bg=%23555555&icon=skype.svg&title=Visitors"/></div>', unsafe_allow_html=True)
